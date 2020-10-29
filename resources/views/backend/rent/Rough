@@ -1,0 +1,83 @@
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="title-5 m-b-35">Rents Table</h3>
+        <div class="table-data__tool">
+            <div class="table-data__tool-right">
+                <a href="{{route('rent.create')}}" class="au-btn au-btn-icon au-btn--green au-btn--small"><i class="zmdi zmdi-plus"></i>add Rent</a>
+            </div>
+
+        </div>
+        <div class="table-responsive table-responsive-data2">
+            <table class="table table-data2">
+                <thead>
+                <tr>
+                    <th>
+                        <label class="au-checkbox">
+                            <input type="checkbox">
+                            <span class="au-checkmark"></span>
+                        </label>
+                    </th>
+                    <th>Vehicle</th>
+                    <th>Driver</th>
+                    <th>Rent Type</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{--                    {{dd($rents[0]->vehicle)}}--}}
+                @foreach($rents as $rent)
+                <tr class="tr-shadow">
+                    <td>
+                        <label class="au-checkbox">
+                            <input type="checkbox">
+                            <span class="au-checkmark"></span>
+                        </label>
+                    </td>
+                    <td class="desc">{{$rent->vehicle->registration_number}}</td>
+                    <td>
+                        <span class="block-email">{{$rent->driver->user->name}}</span>
+                    </td>
+                    <td>@if($rent->rent_type == 1)
+                        {{'1st Half'}}
+                        @elseif($rent->rent_type == 2)
+                        {{'2nd Half'}}
+                        @else
+                        {{'Full Day'}}
+                        @endif
+                    </td>
+                    <td>{{$rent->start_time}}</td>
+                    <td >
+                        {{--                            <a title="End Trip" class="btn btn-danger" href="">--}}
+                        {{--                                <i class="fa fa-money"></i>--}}
+                        {{--                            </a>--}}
+                        @if($rent->end_time == '00:00:00')
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#rent{{$rent->id}}">
+                            End Trip
+                        </button>
+                        @else
+                        {{$rent->end_time}}
+                        @endif
+                        {{--                            <a href="" data-backdrop="static" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalCollection{{$rent->id}}">End Trip</a>--}}
+                    </td>
+                    <td>
+                        @if($rent->end_time == '00:00:00')
+                        On-Going
+                        @else
+                        Completed
+                        @endif
+                    </td>
+
+                </tr>
+                <tr class="spacer"></tr>
+
+
+                @endforeach
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
